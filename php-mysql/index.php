@@ -1,9 +1,45 @@
 <?php
-$db_user = 'root';
-$db_pass = 'root';
-$db_name = 'test_db1';
-$db_host = 'localhost';
-//I know not to publish credentials if it were a real database.
+    require('config/db.php');
+    require('config/config.php');
+
+
+    //create query
+    $query = 'SELECT * FROM page_data1';
+
+    //get result
+    $result = mysqli_query($conn, $query);
+
+    //fetch data
+
+    $data1 = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+    //free result
+    mysqli_free_result($result);
+
+    //close connection
+    
+    mysqli_close($conn);
+
+    print_r($data1);
+    ?>
+
+
+<?php include('inc/header.php');?>
+    <h1>Posts</h1>
+    <?php foreach($data1 as $data):?>
+     <h3><?php echo $data['page_title']; ?></h3>
+     <a href="<?php echo ROOT_URL;?>data.php?pid=<?php echo $data['pid'];?>">Read More</a>
+    <?php endforeach;?>
+<?php include('inc/footer.php');?>
+
+
+
+
+
+
+
+<?php /*
+
 
 $mysqli = new mysqli($db_host,$db_user,$db_pass,$db_name);
 
@@ -23,3 +59,5 @@ try{
 } catch(PDOException $e){
     echo 'ERROR' . $e->getMessage();
 }*/
+
+?>
