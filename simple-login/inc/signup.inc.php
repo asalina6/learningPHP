@@ -2,7 +2,7 @@
 
 if(isset($_POST['signup-submit'])){
 
-    require "./config/db.php";
+    require "../config/db.php";
 
     $username = $_POST['uid'];
     $email = $_POST['mail'];
@@ -10,7 +10,7 @@ if(isset($_POST['signup-submit'])){
     $pwdRepeat = $_POST['pwd-repeat'];
 
     if(empty($username) || empty($email) || empty($pwd) || empty($pwdRepeat)){
-       header("Location: ../signup.php?error=emptyfields&uid=" . $uid . "mail=" $mail); 
+       header("Location: ../signup.php?error=emptyfields&uid=" . $username . "&email=" . $email); 
        exit();
     }else if(!preg_match("/^[a-zA-Z0-9]*$/",$username) && !filter_var($email,FILTER_VALIDATE_EMAIL)){
         header("Location: ../signup.php?error=invalidmailuid");
@@ -20,16 +20,16 @@ if(isset($_POST['signup-submit'])){
         header("Location: ../signup.php?error=invalidmail&uid=" . $username);
         exit();
     }else if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
-        header("Location: ../signup.php?error=invaliduid&mail=" . $mail);
+        header("Location: ../signup.php?error=invaliduid&email=" . $email);
         exit();
     }else if( $password !== $passwordRepeat){
-        header("Location: ../signup.php?error=passwordcheckuid=" . $username . "&mail=" .$email);
+        header("Location: ../signup.php?error=passwordcheckuid=" . $username . "&email=" . $email);
         exit();
     }
     else{
-        $sql = "SELECT uidUsers FROM users WHERE uidUsers=?"; 
+     /*   $query = "SELECT uidUsers FROM users WHERE uidUsers=?"; 
         $statement = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql)){
+        if(!mysqli_stmt_prepare($stmt,$query)){
             header("Location: ../signup.php?error=dberror");
             exit();
         }
@@ -44,12 +44,27 @@ if(isset($_POST['signup-submit'])){
                 header("Location: ../signup.php?error=usertaken&mail=" . $mail);
                 exit();
             }else{
-                
+                $query = 'INSERT INTO users (uidUsers,emailUsers,pwdUsers) VALUES (?,?,?) ';
+                $statement = mysqli_start_init($conn);
+                if(!mysqli_stmt_prepare($statement,$query)){
+                    header("Location: ../signup.php?error=sqlerror");
+                    exit();
+                }else{
+
+                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT)
+
+                    mysqli_stmt_bind_param($statement,"sss",$username,$email,$hashedPwd);
+                    mysqli_stmt_execute($statement);
+                    header("Location: ../signup.php?signup=success");
+                    exit();
+                }       
             }
         }
+        */
     }
-
-
-
-
+    mysqli_stmt_close($statement);
+    mysqli_close($conn);
+}else{
+    header("Location: ../signup.php");
+    exit();
 }
