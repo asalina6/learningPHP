@@ -1,4 +1,4 @@
-
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +28,7 @@
             </form>
 
             <a href="signup.php">Signup</a>
-            <form action="includes/logout.inc.php" method="POST">
+            <form action="inc/logout.inc.php" method="POST">
                 <button type="submit" name="logout-submit">Logout</button>
             </form>
 
