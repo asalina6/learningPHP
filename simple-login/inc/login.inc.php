@@ -22,18 +22,18 @@ if(ISSET($_POST['login-submit'])){
             if($row = mysqli_fetch_assoc($result)){
                 $pwdCheck = password_verify($password, $row['pwdUsers']);
                 if($pwdCheck == false){
-                    header("Location: ..index/php?error=wrongpwd");
+                    header("Location: ../index.php?error=wrongpwd");
                     exit();
                 }else if($pwdCheck == true){
                     session_start();
                     $_SESSION['userID']=$row['idUsers'];
                     $_SESSION['userUID'] = $row['uidUsers'];
 
-                    header("Location: ..index.php?login=success");
+                    header("Location: ../index.php?login=success");
                     exit();
                 }
                 else{
-                    header("Location: ..index/php?error=wrongpwd");
+                    header("Location: ../index.php?error=wrongpwd");
                     exit();
                 }
             }else{

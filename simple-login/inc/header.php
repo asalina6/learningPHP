@@ -20,17 +20,25 @@
             <li><a href="#">About Me</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-        <div>
-            <form action="inc/login.inc.php" method="POST">
-                <input type="text" name="mailuid" placeholder="Username/E-mail..." value="<?php echo isset($_POST['mailuid']);?>">
-                <input type="password" name="pwd" placeholder="Password...">
-                <button type="submit" name="login-submit">Login</button>
-            </form>
+        <div class="header-login">
+        <?php
+            if(isset($_SESSION['userID'])){
+                echo '  <form action="inc/logout.inc.php" method="POST">
+                            <button type="submit" name="logout-submit">Logout</button>
+                        </form>';
+                    }else{
+                    echo '<form action="inc/login.inc.php" method="POST">
+                            <input type="text" name="mailuid" placeholder="Username/E-mail..." value="' . $_POST["mailuid"]  . '">
+                            <input type="password" name="pwd" placeholder="Password...">
+                         <button type="submit" name="login-submit">Login</button>
+                         </form>
+                         <a href="signup.php">Signup</a>';
+            }
 
-            <a href="signup.php">Signup</a>
-            <form action="inc/logout.inc.php" method="POST">
-                <button type="submit" name="logout-submit">Logout</button>
-            </form>
+
+        ?>
+            
+          
 
         </div>
     </nav>
