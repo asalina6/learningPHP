@@ -19,7 +19,7 @@
     $result = mysqli_query($conn, $sql);
     $number_of_results = mysqli_num_rows($result); 
 
-    //please usee prepared statements in the next iteration
+    //please usee prepared statements only if user provides the variables. if not we're safe.
 
     //determine number of total pages available
     $number_of_pages = ceil($number_of_results/$results_per_page);
